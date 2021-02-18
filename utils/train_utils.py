@@ -1,7 +1,13 @@
+import re
+
+import nltk
 import pandas as pd
 import numpy as np
 from statistics import mean
 
+from nltk import WordNetLemmatizer, word_tokenize
+from nltk.corpus import stopwords
+from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.metrics import classification_report
 
 
@@ -84,3 +90,70 @@ def display_mean_results(report_list, digit_prec=4):
     print("\nModel: \n Acc: {}; Prec: {}; Rec: {};".format(round(mean(acc_list), digit_prec),
                                                            round(mean(prec_list), digit_prec),
                                                            round(mean(rec_list), digit_prec)))
+
+
+def tokenize(text):
+    """
+    Tokenize one sentence(document) at a time. Applies normalization(alphanumeric & url), word tokenization,
+    stop-word removal and lemmatization(english).
+    Args:
+        text: str; Sentence-like
+    Returns:
+        clean_tokens: list(str); list of processed tokens
+
+    """
+
+    # finds and replace urls with an empty space
+    url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+    url_list = re.findall(url_regex, text)
+    for url in url_list:
+        text = text.replace(url, " ")
+
+    # tokanizes, removes non-alphanumeric characters and stop-words
+    text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
+    tokens = word_tokenize(text)
+    tokens = [w for w in tokens if w not in set(stopwords.words("english"))]
+
+    # lemmatizes and strips empty spaces
+    clean_tokens = []
+    lemmatizer = WordNetLemmatizer()
+    for token in tokens:
+        clean_token = lemmatizer.lemmatize(token).strip()
+        clean_tokens.append(clean_token)
+
+    return clean_tokens
+
+
+class StartingVerbExtractor(BaseEstimator, TransformerMixin):
+
+    def starting_verb(self, text):
+        """
+        Extracts the starting verb in a sentence.
+        Args:
+            text: str;
+
+        Returns:
+            bool; True if first tag in sentence is verb, False if not
+        """
+
+        sentence_list = nltk.sent_tokenize(text)
+
+        for sentence in sentence_list:
+            pos_tags = nltk.pos_tag(tokenize(sentence))
+
+            try:
+                first_word, first_tag = pos_tags[0]
+            except IndexError as e:
+                first_word, first_tag = None, None
+
+            if first_tag in ['VB', 'VBP'] or first_word == 'RT':
+                return True
+
+        return False
+
+    def fit(self, x, y=None):
+        return self
+
+    def transform(self, X):
+        X_tagged = pd.Series(X).apply(self.starting_verb)
+        return pd.DataFrame(X_tagged)
