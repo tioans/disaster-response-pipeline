@@ -1,7 +1,7 @@
 import json
 import os
 import sys
-
+import nltk
 import plotly
 import joblib
 import pandas as pd
@@ -12,11 +12,13 @@ from plotly.graph_objs import Bar, Pie
 
 from sqlalchemy import create_engine
 
+nltk.download(['punkt', 'wordnet', 'stopwords', 'averaged_perceptron_tagger'])
+
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
-#from utils.train_utils import StartingVerbExtractor, tokenize
+# from utils.train_utils import StartingVerbExtractor, tokenize
 
 app = Flask(__name__)
 
@@ -29,6 +31,7 @@ df = pd.read_sql_table("data/DisasterResponse.db", engine)
 
 # load model
 model = joblib.load(os.path.join(abs_path, model_filepath))
+
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
