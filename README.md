@@ -54,7 +54,7 @@ The datasets originate from Figure Eight.
 
 1. Input message example:
 
-<img align="center" src="screenshots/input.png)" alt="Input">
+![Input](screenshots/input.png)
 
 2. Classification results:
 
