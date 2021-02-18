@@ -131,8 +131,7 @@ def save_model(model, model_filepath):
     # get the absoulte path and save the pipeline at the given location
     abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
     with open(os.path.join(abs_path, model_filepath), 'wb') as f:
-        #joblib.dump(model, f, compress='zlib')
-        joblib.dump(model, f, compress=1)
+        joblib.dump(model, f, compress='zlib')
 
 
 def main():
@@ -149,7 +148,7 @@ def main():
         model.fit(X_train, Y_train)
 
         print('Evaluating model...')
-        evaluate_model(model, X_test, Y_test, category_names, verbose=False)
+        evaluate_model(model, X_test, Y_test, category_names, verbose=True)
 
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         save_model(model, model_filepath)
