@@ -50,12 +50,15 @@ The datasets originate from Figure Eight.
 ## Examples
 
 1. Input message example:
+
 ![Input](screenshots/input.png)
 
 2. Classification results:
+
 ![Output](screenshots/output.png)
 
 3. Training data statistics:
+
 ![Stats](screenshots/stats.png)
 
 ## Acknowledgments
