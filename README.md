@@ -53,6 +53,14 @@ The datasets originate from Figure Eight.
 5. Go to http://localhost:3001/
 6. OPTIONAL: For deploying it to Heroku, start.py serves as the entry point.
 
+## Future work
+Based on the calculated statistics, the dataset is imbalanced as each category has different amount of observations, with "related" and "aid_related" dominating. Reballancing or generating synthetic examples should improve model performance.
+
+Furthermore, neural networks, in particular recurrent networks may provide better performance than AdaBoost.
+
+## Acknowledgments
+Thanks to the Udacity team for the good guidance and a well-made course. In addition, I'd like to thank Figure Eight for providing the dataset used in the project.
+
 ## Examples
 
 1. Input message example:
@@ -66,6 +74,3 @@ The datasets originate from Figure Eight.
 3. Training data statistics:
 
 ![Stats](screenshots/stats.png)
-
-## Acknowledgments
-Thanks to the Udacity team for the good guidance and a well-made course. In addition, I'd like to thank Figure Eight for providing the dataset used in the project.
