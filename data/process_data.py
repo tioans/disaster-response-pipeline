@@ -1,6 +1,5 @@
 import sys
 
-import numpy as np
 import pandas as pd
 
 from sqlalchemy import create_engine
@@ -14,6 +13,7 @@ def load_data(messages_filepath, categories_filepath):
     :return: pd.DataFrame;
     """
 
+    # read data from csv
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
 
@@ -58,6 +58,7 @@ def save_data(df, database_filename):
     :return: None
     """
 
+    # create DB connection and save table
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql(database_filename, engine, index=False)
 

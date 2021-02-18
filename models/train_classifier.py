@@ -13,6 +13,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sqlalchemy import create_engine
 
+# add the current path to sys to import from a different folder
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
@@ -71,17 +72,17 @@ def build_model():
             ('starting_verb', StartingVerbExtractor())
         ])),
 
-        #('clf', MultiOutputClassifier(RandomForestClassifier(), n_jobs=-1))
+        # ('clf', MultiOutputClassifier(RandomForestClassifier(), n_jobs=-1))
         ('clf', MultiOutputClassifier(AdaBoostClassifier(), n_jobs=1))
     ])
 
     # define paramters for grid search
     params = {
         # 'features__text_pipe__vect__ngram_range': ((1, 1), (1, 2)),
-        #'features__text_pipe__vect__max_df': (0.5, 0.75),
-        #'features__text_pipe__vect__max_features': (None, 5000),
+        # 'features__text_pipe__vect__max_df': (0.5, 0.75),
+        # 'features__text_pipe__vect__max_features': (None, 5000),
         # 'features__text_pipe__tfidf__use_idf': (True, False),
-        'clf__estimator__n_estimators': [50] #, 100, 200]
+        'clf__estimator__n_estimators': [50, 100, 200]  # , 100, 200]
         # 'clf__estimator__min_samples_split': [2, 3, 4],
         # 'features__transformer_weights': (
         #     {'text_pipeline': 1, 'starting_verb': 0.5},
