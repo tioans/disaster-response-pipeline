@@ -5,7 +5,7 @@
 https://disaster-response-sys.herokuapp.com
 
 ## About
-The goal of this project is to create a prototype capable of labeling short messages in emergency scenarios, such that first responders are provided with a clear stream of information as quickly as possible. The dataset was provided by Udacity in collaboration with Figure Eight, and contains pre-labeled tweets and messages from a wide range of previously occured real-life distasters. A Natural Language Processing (NLP) pipeline transforms raw messages into predictions.
+The goal of this project is to create a prototype capable of labeling short messages in emergency scenarios, such that first responders are provided with a clear stream of information as quickly as possible. The dataset was provided by Udacity in collaboration with Figure Eight, and contains pre-labeled tweets and messages from a wide range of previously occured real-life distasters. A Natural Language Processing (NLP) pipeline transforms raw messages into multi-output predictions with the default classifier AdaBoost. Other options include k-nearest neighbors and random forest.
 
 Project breakdown:
 1. **Data processing:** Extract Transform Load (ETL) pipeline; takes several csv files and merges them into a dedicated SQLite DB.
