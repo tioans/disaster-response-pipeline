@@ -12,6 +12,9 @@ Project breakdown:
 2. **ML pipeline:** takes the processed data and applies NLP to provide message categories.
 3. **Web dashboard:** displays model performance and training data statistics.
 
+Model performance:
+* Model average (0-1): Accuracy: 0.943; Precision 0.9353; Recall: 0.943.
+
 ## Dependencies
 
 * Python 3.8
