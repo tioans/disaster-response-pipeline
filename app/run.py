@@ -1,7 +1,6 @@
 import json
 import os
 import sys
-import nltk
 import plotly
 import joblib
 import pandas as pd
@@ -11,8 +10,6 @@ from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar, Pie
 
 from sqlalchemy import create_engine
-
-nltk.download(['punkt', 'wordnet', 'stopwords', 'averaged_perceptron_tagger'])
 
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
