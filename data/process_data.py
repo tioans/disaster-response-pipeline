@@ -1,5 +1,6 @@
 import sys
 
+import numpy as np
 import pandas as pd
 
 from sqlalchemy import create_engine
@@ -47,6 +48,16 @@ def clean_data(df):
     df = df.drop_duplicates(subset=["id"], keep="first")  # drop duplicates
     print("Num. duplicates after removing : ", df.duplicated(subset='id', keep='first').sum())
 
+    # check for zero rows and rows with labels different from 1 or 0
+    zero_rows = list(df[df[categories.columns].eq(0).all(1)].index)
+    bad_ids = np.where((df[categories.columns] != 1) & (df[categories.columns] != 0))
+
+    # keep only rows which are not in the lists above. X-files?!
+    print("Num. bad rows before removing : ", df.shape[0])
+    idx_to_keep = set(range(df.shape[0])) - set(list(bad_ids[0]) + zero_rows)
+    df = df.take(list(idx_to_keep))
+    print("Num. bad rows after removing  : ", df.shape[0])
+
     return df
 
 
@@ -60,7 +71,7 @@ def save_data(df, database_filename):
 
     # create DB connection and save table
     engine = create_engine('sqlite:///' + database_filename)
-    df.to_sql(database_filename, engine, index=False)
+    df.to_sql(database_filename, engine, if_exists='replace', index=False)
 
 
 def main():

@@ -40,16 +40,7 @@ def load_data(database_filepath):
     Y = df.drop(["id", "message", "original", "genre"], axis=1)
     category_names = list(Y.columns)
 
-    zero_rows = list(Y[Y.eq(0).all(1)].index)  # get a list of indexes with all labels 0
-    bad_ids = np.where((Y != 1) & (Y != 0))  # get a list of indexes with labels different from 0 and 1
-
-    X.drop(list(bad_ids[0]) + zero_rows, axis=0, inplace=True)  # drop the values from X
-    Y.drop(list(bad_ids[0]) + zero_rows, axis=0, inplace=True)  # drop the values from Y
-
-    X = X.values
-    Y = Y.values
-
-    return X, Y, category_names
+    return X.values, Y.values, category_names
 
 
 def build_model():
